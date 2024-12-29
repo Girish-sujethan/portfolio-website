@@ -218,9 +218,12 @@ const itemVariants = {
   animate: { opacity: 1, y: 0 }
 }
 
-export default function ProjectDetail({ params }: { params: { id: string } }) {
-  const { id } = params
-  const project = projectsData[id as keyof typeof projectsData]
+export default async function ProjectDetail({ params }: { params: Promise<{ id: string }> }) {
+  const resolvedParams = await params; // Unwrap the Promise
+  const { id } = resolvedParams;
+
+  const project = projectsData[id as keyof typeof projectsData];
+
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -254,11 +257,11 @@ export default function ProjectDetail({ params }: { params: { id: string } }) {
             <motion.div variants={itemVariants}>
               <ProjectHeader project={project} />
             </motion.div>
-            {(project.videoUrl || project.images) && (
+            {'videoUrl' in project && project.videoUrl ? (
               <motion.div variants={itemVariants}>
                 <ProjectMedia project={project} />
               </motion.div>
-            )}
+            ) : null}
             <motion.div variants={itemVariants}>
               <ProjectContent project={project} />
             </motion.div>

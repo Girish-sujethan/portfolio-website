@@ -8,7 +8,7 @@ interface ProjectCardProps {
   title: string
   description: string
   image: string
-  status: "FEATURED" | "SUGGESTED" | "DRAFT" | "IN_PROGRESS"
+  status: "FEATURED" | "SUGGESTED" | "DRAFT" | "IN_PROGRESS" | string
   technologies: string[]
   demoUrl?: string
   githubUrl?: string

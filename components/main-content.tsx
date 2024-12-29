@@ -96,17 +96,19 @@ export default function MainContent() {
           <div className="inline-flex p-1.5 rounded-full border border-gray-200 bg-gray-100 relative">
             {tabs.map((tab, index) => (
               <button
-                key={tab.id}
-                ref={el => (tabsRef.current[index] = el)}
-                onClick={() => setActiveTab(tab.id)}
-                className={`px-4 py-2 mx-0.5 text-sm font-medium rounded-full transition-all duration-300 relative z-10 ${
-                  activeTab === tab.id
-                    ? 'text-blue-700'
-                    : 'text-gray-600 hover:text-blue-600'
-                }`}
-              >
-                {tab.label}
-              </button>
+              key={tab.id}
+              ref={el => {
+                tabsRef.current[index] = el; // Only assign, no return
+              }}
+              onClick={() => setActiveTab(tab.id)}
+              className={`px-4 py-2 mx-0.5 text-sm font-medium rounded-full transition-all duration-300 relative z-10 ${
+                activeTab === tab.id
+                  ? 'text-blue-700'
+                  : 'text-gray-600 hover:text-blue-600'
+              }`}
+            >
+              {tab.label}
+            </button>
             ))}
             <motion.div
               className="absolute bottom-1.5 left-0.5 h-[calc(100%-12px)] bg-white rounded-full shadow-sm z-0"
