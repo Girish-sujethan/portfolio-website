@@ -1,6 +1,7 @@
 'use client'
 
-import { FileDown } from 'lucide-react'
+import { useState } from 'react'
+import { FileDown, Check } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -10,6 +11,7 @@ export default function ClientLayout({
 }: {
   children: React.ReactNode
 }) {
+  const [isDownloading, setIsDownloading] = useState(false)
   const pathname = usePathname()
   const projectId = pathname.startsWith('/project/') ? pathname.split('/')[2] : null
 
@@ -22,6 +24,11 @@ export default function ClientLayout({
       '3': 'accent-school'
     }[projectId] || 'accent-work'
     accentClass = projectType
+  }
+
+  const handleResumeClick = () => {
+    setIsDownloading(true)
+    setTimeout(() => setIsDownloading(false), 2000) // Reset after 2 seconds
   }
 
   return (
@@ -44,25 +51,27 @@ export default function ClientLayout({
           <div className="flex items-center space-x-4">
             <div className="relative group">
               <Button
-                variant="outline"
+                variant="ghost"
                 size="sm"
-                className={`transition-colors duration-200 border-2 ${
+                className={`transition-all duration-200 ${
                   accentClass ? `${
-                    accentClass === 'accent-work' ? 'text-purple-700 hover:bg-purple-50 border-purple-300' :
-                    accentClass === 'accent-projects' ? 'text-green-700 hover:bg-green-50 border-green-300' :
-                    'text-amber-700 hover:bg-amber-50 border-amber-300'
-                  }` : 'text-blue-700 hover:bg-blue-50 border-blue-300'
-                }`}
+                    accentClass === 'accent-work' ? 'text-purple-700 hover:text-purple-900' :
+                    accentClass === 'accent-projects' ? 'text-green-700 hover:text-green-900' :
+                    'text-amber-700 hover:text-amber-900'
+                  }` : 'text-blue-700 hover:text-blue-900'
+                } hover:bg-transparent focus:ring-0 focus:ring-offset-0`}
+                onClick={handleResumeClick}
                 asChild
               >
-                <a href="/path-to-your-resume.pdf" download="GarrySivakumar_Resume.pdf" aria-label="Download Resume" className="p-2">
-                  <FileDown className="h-5 w-5 mr-2" />
+                <a href="/path-to-your-resume.pdf" download="GarrySivakumar_Resume.pdf" aria-label="Download Resume" className="p-2 flex items-center">
+                  {isDownloading ? (
+                    <Check className="h-5 w-5 mr-2 text-green-500" />
+                  ) : (
+                    <FileDown className="h-5 w-5 mr-2" />
+                  )}
                   <span>Resume</span>
                 </a>
               </Button>
-              <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-3 py-1 bg-gray-900 text-white text-sm rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap">
-                Download my resume
-              </div>
             </div>
             <div className="relative group">
               <div 
