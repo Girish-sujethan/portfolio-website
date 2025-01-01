@@ -17,6 +17,8 @@ export function generateStaticParams() {
   ]
 }
 
+
+
 // This would typically come from an API or database
 const projectsData = {
   '1': {
