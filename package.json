@@ -10,7 +10,10 @@
     "export": "next export"
   },
   "dependencies": {
+    "@radix-ui/react-separator": "^1.1.1",
+    "@radix-ui/react-slider": "^1.2.2",
     "@radix-ui/react-slot": "^1.0.2",
+    "@radix-ui/react-tabs": "^1.1.2",
     "@radix-ui/react-toast": "^1.1.4",
     "@types/node": "20.4.5",
     "@types/react": "18.2.17",

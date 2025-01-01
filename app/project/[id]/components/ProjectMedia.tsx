@@ -4,7 +4,12 @@ import { Button } from "@/components/ui/button"
 import { Slider } from "@/components/ui/slider"
 import { ArrowLeft, Play, Pause, SkipForward, SkipBack, Maximize, Minimize } from 'lucide-react'
 
-export default function ProjectMedia({ project }: { project: any }) {
+interface ProjectMediaProps {
+  project: any;
+  accentClass: string;
+}
+
+export default function ProjectMedia({ project, accentClass }: ProjectMediaProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const videoRef = useRef<HTMLVideoElement>(null)
   const [isPlaying, setIsPlaying] = useState(false)
@@ -99,6 +104,19 @@ export default function ProjectMedia({ project }: { project: any }) {
     return null
   }
 
+  const getAccentColor = () => {
+    switch (accentClass) {
+      case 'accent-work':
+        return 'from-purple-600 to-purple-400';
+      case 'accent-projects':
+        return 'from-green-600 to-green-400';
+      case 'accent-school':
+        return 'from-amber-700 to-amber-500';
+      default:
+        return 'from-blue-600 to-blue-400';
+    }
+  }
+
   return (
     <motion.div 
       initial={{ y: 20, opacity: 0 }}
@@ -114,7 +132,7 @@ export default function ProjectMedia({ project }: { project: any }) {
                 <Button
                   variant="secondary"
                   size="icon"
-                  className="w-16 h-16 rounded-full bg-white/20 hover:bg-white/30 transition-colors"
+                  className={`w-16 h-16 rounded-full bg-gradient-to-r ${getAccentColor()} bg-opacity-80 hover:bg-opacity-100 transition-colors`}
                   onClick={toggleVideo}
                 >
                   <Play className="h-8 w-8 text-white" />
@@ -191,7 +209,7 @@ export default function ProjectMedia({ project }: { project: any }) {
             transition={{ duration: 0.5 }}
           />
           <div className="absolute bottom-4 left-4 right-4">
-            <div className="bg-gray-100/80 backdrop-blur-sm rounded-lg p-3 sm:p-4 text-xs sm:text-sm text-gray-800 shadow-lg">
+            <div className={`bg-gradient-to-r ${getAccentColor()} bg-opacity-10 backdrop-blur-sm rounded-lg p-3 sm:p-4 text-xs sm:text-sm text-white shadow-lg`}>
               {project.images[currentImageIndex].caption}
             </div>
           </div>
@@ -200,7 +218,7 @@ export default function ProjectMedia({ project }: { project: any }) {
               <Button
                 variant="secondary"
                 size="icon"
-                className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gray-100/80 hover:bg-gray-200/80 transition-colors shadow-lg"
+                className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/80 hover:bg-white transition-colors shadow-lg"
                 onClick={previousImage}
               >
                 <ArrowLeft className="h-4 w-4 text-gray-600" />
@@ -208,7 +226,7 @@ export default function ProjectMedia({ project }: { project: any }) {
               <Button
                 variant="secondary"
                 size="icon"
-                className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gray-100/80 hover:bg-gray-200/80 transition-colors shadow-lg"
+                className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/80 hover:bg-white transition-colors shadow-lg"
                 onClick={nextImage}
               >
                 <ArrowLeft className="h-4 w-4 rotate-180 text-gray-600" />

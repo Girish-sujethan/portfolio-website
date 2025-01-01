@@ -7,7 +7,18 @@ import AnimatedTitle from "@/components/AnimatedTitle"
 import AnimatedSearchBar from "@/components/AnimatedSearchBar"
 import { usePathname } from 'next/navigation'
 
-const projects = [
+interface Project {
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+  status: "FEATURED" | "SUGGESTED" | "DRAFT" | "IN_PROGRESS";
+  technologies: string[];
+  demoUrl?: string;
+  githubUrl?: string;
+}
+
+const projects: Project[] = [
   {
     id: '1',
     title: "E-commerce Platform Optimization",
@@ -30,7 +41,7 @@ const projects = [
   }
 ]
 
-const schoolProjects = [
+const schoolProjects: Project[] = [
   {
     id: '3',
     title: "Machine Learning Research Project",
