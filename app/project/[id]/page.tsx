@@ -8,6 +8,15 @@ import ProjectSidebar from './components/ProjectSidebar'
 import { useEffect } from 'react'
 import { Globe, Github } from 'lucide-react'
 
+export function generateStaticParams() {
+  // This should match your project IDs
+  return [
+    { id: '1' },
+    { id: '2' },
+    { id: '3' }
+  ]
+}
+
 // This would typically come from an API or database
 const projectsData = {
   '1': {
