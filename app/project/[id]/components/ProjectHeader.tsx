@@ -3,10 +3,14 @@ import { Button } from "@/components/ui/button"
 import { Calendar, ArrowLeft, Share2 } from 'lucide-react'
 import Link from 'next/link'
 import { useState } from 'react'
-import { useToast } from "@/hooks/use-toast"
+import { useToast } from "@/components/ui/use-toast"
 
+interface ProjectHeaderProps {
+  project: any;
+  accentClass: string;
+}
 
-export default function ProjectHeader({ project }: { project: any }) {
+export default function ProjectHeader({ project, accentClass }: ProjectHeaderProps) {
   const { toast } = useToast()
   const [isCopied, setIsCopied] = useState(false)
 
@@ -39,7 +43,11 @@ export default function ProjectHeader({ project }: { project: any }) {
     >
       <div className="flex items-center justify-between">
         <Link href="/" className="inline-flex">
-          <Button variant="ghost" size="sm" className="hover:bg-purple-50 transition-colors">
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            className={`hover:bg-accent/10 transition-colors ${accentClass}`}
+          >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back
           </Button>
@@ -47,7 +55,7 @@ export default function ProjectHeader({ project }: { project: any }) {
         <Button 
           variant="ghost" 
           size="sm" 
-          className="hover:bg-purple-50 transition-colors"
+          className={`hover:bg-accent/10 transition-colors ${accentClass}`}
           onClick={handleShare}
         >
           <Share2 className="mr-2 h-4 w-4" />
@@ -69,13 +77,21 @@ export default function ProjectHeader({ project }: { project: any }) {
           />
         </motion.div>
         <div className="space-y-2 sm:space-y-3">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-700 to-purple-400">
+          <h1 className={`text-3xl sm:text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r ${
+            accentClass === 'accent-work' ? 'from-purple-700 to-purple-400' :
+            accentClass === 'accent-projects' ? 'from-green-700 to-green-400' :
+            'from-amber-800 to-amber-500'
+          }`}>
             {project.title}
           </h1>
           <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-sm sm:text-base text-gray-600">
             {project.period.start && (
               <div className="flex items-center">
-                <Calendar className="h-4 w-4 mr-2 text-purple-500" />
+                <Calendar className={`h-4 w-4 mr-2 ${
+                  accentClass === 'accent-work' ? 'text-purple-500' :
+                  accentClass === 'accent-projects' ? 'text-green-500' :
+                  'text-amber-700'
+                }`} />
                 <time>{project.period.start}</time>
               </div>
             )}
@@ -88,7 +104,11 @@ export default function ProjectHeader({ project }: { project: any }) {
             <span className="hidden sm:inline">•</span>
             <span>{project.location}</span>
           </div>
-          <div className="text-xl sm:text-2xl font-medium text-purple-800">
+          <div className={`text-xl sm:text-2xl font-medium ${
+            accentClass === 'accent-work' ? 'text-purple-800' :
+            accentClass === 'accent-projects' ? 'text-green-800' :
+            'text-amber-800'
+          }`}>
             {project.organization}
           </div>
         </div>

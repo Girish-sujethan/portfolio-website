@@ -52,7 +52,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       </main>
       <footer className="bg-gray-50 border-t border-gray-100 py-8">
         <div className="container mx-auto px-4 md:px-8 text-center text-gray-600">
-          <p>&copy; {new Date().getFullYear()} Girish Sujethan. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Garry Sivakumar. All rights reserved.</p>
           <p className="mt-2">Built with Next.js and Tailwind CSS</p>
         </div>
       </footer>

@@ -3,10 +3,10 @@
 import React, { useState, useEffect } from 'react'
 
 const phrases = [
-  { text: "Full Stack Software Engineer", color: "text-blue-600" },
-  { text: "Testing 🤯", color: "text-red-600" },
-  { text: "Monkey 🐒", color: "text-yellow-600" },
-  { text: "MONKEYS!! 💥", color: "text-green-600" },
+  { text: "Full Stack Engineer", color: "text-blue-600" },
+  { text: "Board Game Enthusiast 🎲", color: "text-green-600" },
+  { text: "Book Worm 📚", color: "text-yellow-600" },
+  { text: "Muay Thai Fighter 🥊", color: "text-red-600" },
   { text: "Software Engineer", color: "text-blue-600" },
 ]
 

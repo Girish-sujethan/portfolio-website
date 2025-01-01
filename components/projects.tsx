@@ -6,21 +6,21 @@ const projects = [
   {
     title: "Mission-Driven Frontend Development",
     description: "Garry contributed to a frontend project that aligned with the company's mission, demonstrating his commitment to impactful work.",
-    image: "/images/bs1.webp?height=200&width=300",
+    image: "/placeholder.svg?height=200&width=300",
     status: "SUGGESTED",
     draft: true
   },
   {
     title: "Collaborative Backend System Revamp",
     description: "Garry led a team to revamp a backend system, enhancing performance and scalability through effective teamwork.",
-    image: "/images/bs2.webp?height=200&width=300",
+    image: "/placeholder.svg?height=200&width=300",
     status: "SUGGESTED",
     draft: true
   },
   {
     title: "Internship Experience Showcase",
     description: "Garry compiled key projects from his nearly two years of internship experience, highlighting his growth and adaptability in software engineering roles.",
-    image: "/images/bs1.webpheight=200&width=300",
+    image: "/placeholder.svg?height=200&width=300",
     status: "SUGGESTED",
     draft: true
   }

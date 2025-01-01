@@ -33,7 +33,7 @@ export default function Sidebar() {
           <div className="absolute inset-[3px] bg-white rounded-2xl"></div>
           <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-lg border-4 border-white">
             <img
-              src="/images/rahul.png"
+              src="/placeholder.svg"
               alt="Profile"
               className="object-cover w-full h-full transition-all duration-300 hover:scale-105 hover:brightness-110"
             />
@@ -41,7 +41,7 @@ export default function Sidebar() {
         </div>
         <h2 className="text-3xl font-bold text-gray-900 mt-6 mb-2 text-center tracking-tight">
           <span className="text-black">
-            Girish Sujethan
+            Garry Sivakumar
           </span>
         </h2>
       </div>

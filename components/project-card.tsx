@@ -8,14 +8,15 @@ interface ProjectCardProps {
   title: string
   description: string
   image: string
-  status: "FEATURED" | "SUGGESTED" | "DRAFT" | "IN_PROGRESS" | string
+  status: "FEATURED" | "SUGGESTED" | "DRAFT" | "IN_PROGRESS"
   technologies: string[]
   demoUrl?: string
   githubUrl?: string
+  accentClass: string;
 }
 
-function StatusBadge({ status }: { status: ProjectCardProps['status'] }) {
-  const baseClasses = "inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-medium bg-gradient-to-r from-orange-50 to-rose-50 text-orange-700 border border-orange-100/50 shadow-[0_0_8px_rgba(251,146,60,0.15)]"
+function StatusBadge({ status, accentClass }: { status: ProjectCardProps['status']; accentClass: string }) {
+  const baseClasses = `inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-medium bg-gradient-to-r from-orange-50 to-rose-50 text-orange-700 border border-orange-100/50 shadow-[0_0_8px_rgba(251,146,60,0.15)] ${accentClass}`
   
   switch (status) {
     case 'SUGGESTED':
@@ -89,12 +90,13 @@ export function ProjectCard({
   status,
   technologies,
   demoUrl,
-  githubUrl
+  githubUrl,
+  accentClass
 }: ProjectCardProps) {
   return (
     <Link href={`/project/${id}`} passHref>
       <div
-        className="group relative overflow-hidden rounded-xl transition-all duration-300 hover:shadow-lg bg-white cursor-pointer hover:bg-blue-50/30"
+        className={`group relative overflow-hidden rounded-xl transition-all duration-300 hover:shadow-lg bg-white cursor-pointer hover:bg-opacity-30 ${accentClass}`}
       >
         <div
           className="relative z-10 p-6 transform transition-transform duration-300 group-hover:scale-[1.01]"
@@ -111,7 +113,7 @@ export function ProjectCard({
               />
             </div>
             <div className="flex flex-wrap gap-2">
-              <StatusBadge status={status} />
+              <StatusBadge status={status} accentClass={accentClass} />
             </div>
             <h3 className="text-2xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors duration-300">
               {title}

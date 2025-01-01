@@ -2,16 +2,17 @@
 
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ProjectCard } from "./project-card"
-import AnimatedTitle from "./AnimatedTitle"
-import AnimatedSearchBar from "./AnimatedSearchBar"
+import { ProjectCard } from "@/components/project-card"
+import AnimatedTitle from "@/components/AnimatedTitle"
+import AnimatedSearchBar from "@/components/AnimatedSearchBar"
+import { usePathname } from 'next/navigation'
 
 const projects = [
   {
     id: '1',
     title: "E-commerce Platform Optimization",
     description: "Led the development of a high-performance e-commerce platform, implementing advanced caching strategies and optimizing database queries, resulting in a 40% improvement in page load times and a 25% increase in conversion rates.",
-    image: "/images/bs1.webp?height=200&width=300",
+    image: "/placeholder.svg?height=200&width=300",
     status: "FEATURED",
     technologies: ["Next.js", "TypeScript", "PostgreSQL", "Redis", "AWS"],
     demoUrl: "https://demo.example.com",
@@ -21,7 +22,7 @@ const projects = [
     id: '2',
     title: "Real-time Analytics Dashboard",
     description: "Designed and implemented a real-time analytics dashboard processing millions of events daily. Utilized WebSocket connections and efficient data structures to handle live updates while maintaining sub-second response times.",
-    image: "/images/bs2.webp?height=200&width=300",
+    image: "/placeholder.svg?height=200&width=300",
     status: "SUGGESTED",
     technologies: ["React", "Node.js", "WebSocket", "MongoDB", "Docker"],
     demoUrl: "https://demo.example.com",
@@ -34,7 +35,7 @@ const schoolProjects = [
     id: '3',
     title: "Machine Learning Research Project",
     description: "Developed a machine learning model for predictive analysis of student performance, achieving 85% accuracy. Implemented using Python and scikit-learn, with a web interface for easy data visualization.",
-    image: "/images/bs1.webp?height=200&width=300",
+    image: "/placeholder.svg?height=200&width=300",
     status: "IN_PROGRESS",
     technologies: ["Python", "scikit-learn", "Flask", "React", "D3.js"],
     githubUrl: "https://github.com/yourusername/project"
@@ -59,22 +60,24 @@ const containerVariants = {
 }
 
 export default function MainContent() {
-  const [activeTab, setActiveTab] = useState('work')
-  const [tabUnderlineWidth, setTabUnderlineWidth] = useState(0)
-  const [tabUnderlineLeft, setTabUnderlineLeft] = useState(0)
+  const [activeTab, setActiveTab] = useState<string>('work')
+  const [tabUnderlineWidth, setTabUnderlineWidth] = useState<number>(0)
+  const [tabUnderlineLeft, setTabUnderlineLeft] = useState<number>(0)
   const tabsRef = useRef<(HTMLButtonElement | null)[]>([])
+  const pathname = usePathname()
+  const isProjectPage = pathname.startsWith('/project/')
 
   const tabs = [
-    { id: 'work', label: 'Work' },
-    { id: 'projects', label: 'Projects' },
-    { id: 'school', label: 'School' }
+    { id: 'work', label: 'Work', color: 'text-purple-600' },
+    { id: 'projects', label: 'Projects', color: 'text-green-600' },
+    { id: 'school', label: 'School', color: 'text-amber-800' }
   ]
 
   useEffect(() => {
     function setTabPosition() {
       const currentTab = tabsRef.current[tabs.findIndex(tab => tab.id === activeTab)]
       setTabUnderlineLeft(currentTab?.offsetLeft ?? 0)
-      setTabUnderlineWidth((currentTab?.clientWidth ?? 0) - 2)
+      setTabUnderlineWidth(currentTab?.offsetWidth ?? 0)
     }
 
     setTabPosition()
@@ -92,28 +95,36 @@ export default function MainContent() {
       </div>
 
       <div className="w-full">
-        <nav className="flex justify-center mb-8 relative">
-          <div className="inline-flex p-1.5 rounded-full border border-gray-200 bg-gray-100 relative">
+        <nav className="flex justify-center mb-8 relative" key="tab-navigation">
+          <div className="inline-flex p-0.5 rounded-full border border-gray-200 bg-gray-100 relative">
             {tabs.map((tab, index) => (
               <button
-              key={tab.id}
-              ref={el => {
-                tabsRef.current[index] = el; // Only assign, no return
-              }}
-              onClick={() => setActiveTab(tab.id)}
-              className={`px-4 py-2 mx-0.5 text-sm font-medium rounded-full transition-all duration-300 relative z-10 ${
-                activeTab === tab.id
-                  ? 'text-blue-700'
-                  : 'text-gray-600 hover:text-blue-600'
-              }`}
-            >
-              {tab.label}
-            </button>
+                key={tab.id}
+                ref={el => (tabsRef.current[index] = el)}
+                onClick={() => setActiveTab(tab.id)}
+                className={`px-6 py-2 text-sm font-medium rounded-full relative z-10 transition-colors duration-300 ${
+                  activeTab === tab.id
+                    ? `text-white font-semibold`
+                    : 'text-gray-600 hover:text-gray-900'
+                }`}
+              >
+                {tab.label}
+              </button>
             ))}
             <motion.div
-              className="absolute bottom-1.5 left-0.5 h-[calc(100%-12px)] bg-white rounded-full shadow-sm z-0"
-              animate={{ width: tabUnderlineWidth - 4, x: tabUnderlineLeft }}
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              className="absolute inset-0 bg-blue-500 rounded-full shadow-lg z-0"
+              animate={{ 
+                width: tabUnderlineWidth, 
+                x: tabUnderlineLeft,
+                transition: {
+                  type: "spring",
+                  stiffness: 400,
+                  damping: 30,
+                  mass: 1
+                }
+              }}
+              initial={false}
+              layout
             />
           </div>
         </nav>
@@ -130,7 +141,7 @@ export default function MainContent() {
               <motion.div className="space-y-8" variants={containerVariants}>
                 {projects.map((project, index) => (
                   <motion.div key={project.id} variants={cardVariants}>
-                    <ProjectCard {...project} />
+                    <ProjectCard {...project} accentClass="accent-work" />
                   </motion.div>
                 ))}
               </motion.div>
@@ -139,7 +150,7 @@ export default function MainContent() {
               <motion.div className="space-y-8" variants={containerVariants}>
                 {projects.slice(0, 1).map((project, index) => (
                   <motion.div key={project.id} variants={cardVariants}>
-                    <ProjectCard {...project} />
+                    <ProjectCard {...project} accentClass="accent-projects" />
                   </motion.div>
                 ))}
               </motion.div>
@@ -148,7 +159,7 @@ export default function MainContent() {
               <motion.div className="space-y-8" variants={containerVariants}>
                 {schoolProjects.map((project, index) => (
                   <motion.div key={project.id} variants={cardVariants}>
-                    <ProjectCard {...project} />
+                    <ProjectCard {...project} accentClass="accent-school" />
                   </motion.div>
                 ))}
               </motion.div>

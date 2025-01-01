@@ -15,7 +15,7 @@ export default function ProfileHeader() {
           </div>
           <div className="relative w-48 h-48 rounded-full overflow-hidden">
             <img
-              src="/images/rahul.png"
+              src="/placeholder.svg"
               alt="Profile"
               className="object-cover w-full h-full"
             />
@@ -25,7 +25,7 @@ export default function ProfileHeader() {
           </div>
         </div>
         <div className="space-y-4">
-          <h1 className="text-3xl font-bold">Girish Sujethan</h1>
+          <h1 className="text-3xl font-bold">Garry Sivakumar</h1>
           <Button className="w-full" size="lg">
             Get In Touch
           </Button>

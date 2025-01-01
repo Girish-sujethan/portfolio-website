@@ -5,15 +5,15 @@ import ProjectHeader from './components/ProjectHeader'
 import ProjectContent from './components/ProjectContent'
 import ProjectMedia from './components/ProjectMedia'
 import ProjectSidebar from './components/ProjectSidebar'
-import { Globe, Github } from 'lucide-react'
 import { useEffect } from 'react'
+import { Globe, Github } from 'lucide-react'
 
 // This would typically come from an API or database
 const projectsData = {
   '1': {
-    type: 'project',
+    type: 'work',
     title: "E-commerce Platform Optimization",
-    logo: "/images/monkey3.jpg?height=60&width=60",
+    logo: "/placeholder.svg?height=60&width=60",
     organization: "TechCorp Solutions",
     period: {
       start: "2023-06",
@@ -22,14 +22,15 @@ const projectsData = {
     location: "Toronto, Canada",
     shortBio: "A comprehensive e-commerce platform optimization project focused on performance, user experience, and scalability.",
     description: "Led the development of a high-performance e-commerce platform, implementing advanced caching strategies and optimizing database queries, resulting in a 40% improvement in page load times and a 25% increase in conversion rates.",
-    videoUrl: "/images/monkey.mp4",
+    videoUrl: "/placeholder.mp4",
+    thumbnail: "/placeholder.svg?height=400&width=600",
     images: [
       {
-        url: "/images/monkey1.png?height=600&width=800",
+        url: "/placeholder.svg?height=600&width=800",
         caption: "Dashboard Overview"
       },
       {
-        url: "/images/monkey2.webp?height=600&width=800",
+        url: "/placeholder.svg?height=600&width=800",
         caption: "Performance Metrics"
       }
     ],
@@ -81,7 +82,7 @@ const projectsData = {
     ]
   },
   '2': {
-    type: 'project',
+    type: 'projects',
     title: "Real-time Analytics Dashboard",
     logo: "/placeholder.svg?height=60&width=60",
     period: {
@@ -139,7 +140,7 @@ const projectsData = {
     ]
   },
   '3': {
-    type: 'project',
+    type: 'school',
     title: "Machine Learning Research Project",
     logo: "/placeholder.svg?height=60&width=60",
     period: {
@@ -202,6 +203,20 @@ const projectsData = {
   }
 }
 
+// Add a function to get accent class based on project type
+function getAccentClass(type: string) {
+  switch (type) {
+    case 'work':
+      return 'accent-work';
+    case 'projects':
+      return 'accent-projects';
+    case 'school':
+      return 'accent-school';
+    default:
+      return 'accent-work';
+  }
+}
+
 const pageVariants = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
@@ -218,12 +233,9 @@ const itemVariants = {
   animate: { opacity: 1, y: 0 }
 }
 
-export default async function ProjectDetail({ params }: { params: Promise<{ id: string }> }) {
-  const resolvedParams = await params; // Unwrap the Promise
-  const { id } = resolvedParams;
-
-  const project = projectsData[id as keyof typeof projectsData];
-
+export default function ProjectDetail({ params }: { params: { id: string } }) {
+  const { id } = params
+  const project = projectsData[id as keyof typeof projectsData]
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -233,9 +245,11 @@ export default async function ProjectDetail({ params }: { params: Promise<{ id: 
     return <div>Content not found</div>
   }
 
+  const accentClass = getAccentClass(project.type)
+
   return (
     <motion.div 
-      className="min-h-screen"
+      className={`min-h-screen ${accentClass}`}
       initial="initial"
       animate="animate"
       exit="exit"
@@ -255,19 +269,17 @@ export default async function ProjectDetail({ params }: { params: Promise<{ id: 
         >
           <motion.div className="flex-1 space-y-8 lg:space-y-12" variants={contentVariants}>
             <motion.div variants={itemVariants}>
-              <ProjectHeader project={project} />
+              <ProjectHeader project={project} accentClass={accentClass} />
             </motion.div>
-            {'videoUrl' in project && project.videoUrl ? (
-              <motion.div variants={itemVariants}>
-                <ProjectMedia project={project} />
-              </motion.div>
-            ) : null}
             <motion.div variants={itemVariants}>
-              <ProjectContent project={project} />
+              <ProjectMedia project={project} accentClass={accentClass} />
+            </motion.div>
+            <motion.div variants={itemVariants}>
+              <ProjectContent project={project} accentClass={accentClass} />
             </motion.div>
           </motion.div>
           <motion.div variants={itemVariants}>
-            <ProjectSidebar project={project} />
+            <ProjectSidebar project={project} accentClass={accentClass} />
           </motion.div>
         </motion.div>
       </div>
